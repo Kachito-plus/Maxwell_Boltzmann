@@ -1,0 +1,24 @@
+program testkiss
+implicit integer*8(a-z)
+do i=1,100000000; t=KISS(); end do
+if(t.eq.1666297717051644203_8) then
+print*,"100 million calls to KISS() OK"
+else; print*,"Fail"
+end if; end
+
+function KISS()
+implicit integer*8(a-z)
+data x,y,z,c /1234567890987654321_8, 362436362436362436_8,&
+1066149217761810_8, 123456123456123456_8/
+save x,y,z,c
+m(x,k)=ieor(x,ishft(x,k)) !statement function
+s(x)=ishft(x,-63) !statement function
+t=ishft(x,58)+c
+if(s(x).eq.s(t)) then; c=ishft(x,-6)+s(x)
+else; c=ishft(x,-6)+1-s(x+t); endif
+x=t+x
+y=m(m(m(y,13_8),-17_8),43_8)
+z=6906969069_8*z+1234567
+KISS=x+y+z
+print*,KISS
+return; end
